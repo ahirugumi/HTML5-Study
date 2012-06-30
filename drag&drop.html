@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+        #event{
+           height: 50px;
+           border: 5px;
+           background: silver;
+        }
+        #drag_drop{
+           height: 300px;
+           border: 5px;
+           background: lightgrey;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            var target = document.getElementById("drag_drop");
+            var src = document.getElementById("img");
+            src.ondragstart=function(e){
+                $('#event').html('onDragStartが発生しました。');
+                e.dataTransfer.setData("img", "img");
+            };
+            target.ondrop=function(e){
+                $('#event').html('onDropが発生しました。');
+                //e.stopPropagation();
+                target.innerHTML='';
+                var drop_target=document.getElementById(e.dataTransfer.getData("img"));
+                if (drop_target!=null){
+                    e.currentTarget.appendChild(drop_target);
+                }
+                var drop_text=e.dataTransfer.getData("text/plain");
+                if (drop_text!=null){
+                    target.innerHTML=drop_text;
+                }
+                e.preventDefault();
+            };
+            target.ondragover=function(e){
+                $('#event').html('onDragOverが発生しました。');
+                e.preventDefault();
+                return false;
+            };
+            target.ondragenter=function(e){
+                $('#event').html('onDragEnterが発生しました。');
+                e.preventDefault();
+                return false;
+            };
+            target.ondragleave=function(e){
+                $('#event').html('onDragLeaveが発生しました。');
+                e.preventDefault();
+                return false;
+            };
+
+            //画像
+            var img = document.getElementById("img");
+            var context_img = img.getContext("2d");
+            context_img.fillStyle="gray";
+            context_img.fillRect(0, 0, 300, 300);
+            var image = new Image();
+            image.src = "ahirugumi.png";
+            image.onload=function(){
+                context_img.drawImage(image, 0, 0, 300, 300);
+            }
+        };
+        $(document).ready(function(){
+            $("#clear").click(function(){
+                location.href="drag&drop.html";
+            } );
+        });
+        </script>
+</head>
+<body>
+    <form id="form_sample" name="form_sample" >
+    <header>
+        <hgroup>
+            <h1>HTML5 drag & drop Sample</h1>
+            <h2>このページは、HTML5のdrag & dropのサンプルページです。</h2>
+        </hgroup>
+    </header>
+    前回の勉強会で描いたCanvasをドラックアンドドロップしてみましょう。<br>
+    発生するイベントが表示されます。
+    <button id="clear">再描画</button>
+    <div><canvas draggable="true" id="img" width="300" height="300"></canvas></div>
+    <div id="drag_drop"></div>
+    <div id="event">上の枠にdrag & dropしてみましょう</div>
+    </form>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+</html>

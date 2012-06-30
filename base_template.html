@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        header, footer, .head {
+            background: #333333;
+        }
+        body {
+            background: #000000;
+            color: #ffffff;
+        }
+        nav {
+            background: #4d4d4d;
+        }
+        section {
+            background: #666666;
+        }
+        article {
+            background: #999999;
+            color: #000000;
+        }
+        .section_head, .article_head {
+            background: #b3b3b3;
+            color: #000000;
+        }
+        .p_align {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <p class="p_align">----- body -----</p>
+    <header>
+        <p class="p_align">----- header -----</p>
+        <hgroup>
+            <h1>HTML5 Sample</h1>
+            <h2>このページは、HTML5のサンプルページです。<br>headerについて</h2>
+        </hgroup>
+        <p>headerには、ページのタイトルやロゴ、ページ内検索等で利用される事が多いです。</p>
+    </header>
+    <nav>
+    <p class="p_align">----- nav -----</p>
+        <h2>navについて</h2>
+        <p>navには、優先的に見てほしいページやリンク集を記述します。</p>
+        <ul>
+            <li>nav1</li>
+            <li>nav2</li>
+            <li>nav3</li>
+        </ul>
+    </nav>
+<section>
+    <p class="p_align">----- section -----</p>
+    <header class="section_head">
+        <p class="p_align">----- section header -----</p>
+        <hgroup>
+            <h2>sectionについて</h2>
+            <h3>使い方のガイド</h3>
+        </hgroup>
+    </header>
+    <ul>
+        <li>内容の見出しを記述しようとする時には、セクションを作成します。</li>
+        <li>別のセクションを記述しようとする時には、そのセクションが他のセクションと比べ高いか低いかを判断し高い場合と同じ場合は、新しいセクションを開始します。</li>
+    </ul>
+    <article>
+        <p class="p_align">----- article -----</p>
+        <header class="article_head">
+            <p class="p_align">----- article header -----</p>
+            <hgroup>
+                <h2>articleについて</h2>
+                <h3>使い方のガイド</h3>
+            </hgroup>
+        </header>
+        <ul><li>ブログの記事などの独立したコンテンツを表現するときに利用します。</li></ul>
+        <h4>time要素</h4>
+        <ul><li>作成日 <time datetime=2012-05-20>2012-05-20</time><br>time要素は、検索エンジンのロボットやブラウザに日時を正確に認識させる場合に利用します。</li></ul>
+        <h4>mark要素</h4>
+        <ul><li><mark>time要素は、既に削除された？？</mark><br>
+        markは、文字列のハイライトをしたいときに利用します。</li></ul>
+        <h4>ruby要素</h4>
+        <ul><li><ruby>金木犀<rt>きんもくせい</rt></ruby><br>
+        ruby要素は、ルビをふる場合に利用します。</li></ul>
+        <h4>figure要素、figcaption要素</h4>
+        <ul><li>文章から参照される図、ソースコード、表、画像、写真などを表現する場合に利用します。</li></ul>
+        <figure>
+            <img title="html5_template.png" src="html5_template.png" alt="HTML5のひな形"/>
+            <figcaption>
+                HTML5のひな形
+            </figcaption>
+        </figure>
+    </article>
+</section>
+<footer>
+    <p class="p_align">----- footer -----</p>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>address要素は、管理者や連絡先を記述します。
+</footer>
+</body>
+</html>

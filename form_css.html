@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        article {
+            color:blue;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+        p[title$="2"]{
+            color: yellow;
+        }
+        .radius {
+            -webkit-border-radius: 10px;
+        }
+        #box{
+            display: -webkit-box;
+        }
+        #left{
+            width:140px;
+            min-height: 400px;
+            background:#DCDCDC
+        }
+        #center{
+            width:380px;
+            min-height:200px;
+            background:#C0C0C0;
+        }
+        #right{
+            width:200px;
+            min-height:50px;
+            background:#808080;
+        }
+        #tran {
+            background-color: #CDCDC1;
+            -webkit-transition: background-color 1s linear;
+        }
+        #tran:hover {
+            background-color: #000000;
+        }
+        #anime{
+            width:100px;
+            height:100px;
+            background:#FFFFFF;
+            position:relative;
+            -webkit-animation:anime_demo 5s linear 2s infinite alternate;
+        }
+        @-webkit-keyframes anime_demo
+        {
+            0%   {background:#DCDCDC; left:0px; top:0px;}
+            25%  {background:#C0C0C0; left:200px; top:0px;}
+            50%  {background:#808080; left:400px; top:0px;}
+            75%  {background:#696969; left:600px; top:0px;}
+            100% {background:#000000; left:800px; top:0px;}
+        }
+        #errMessage{
+            color:yellow;
+        }
+        </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        function setRangeValue(value){
+            $("#range_value").html(value);
+        }
+        function execute(){
+            var errMessage='';
+            if ($('#tel')[0].validity.valid==false){
+                errMessage+='電話番号の入力が正しくありません。<br/>'
+            }
+            if ($('#email')[0].validity.valid==false){
+                errMessage+='メールアドレスの入力が正しくありません。<br/>'
+            }
+            if ($('#url')[0].validity.valid==false){
+                errMessage+='URLの入力が正しくありません。<br/>'
+            }
+            if ($('#smartphone')[0].validity.valid==false){
+                errMessage+='携帯電話番号の入力が正しくありません。<br/>'
+            }
+            if ($('#userid')[0].validity.valid==false){
+                errMessage+='ユーザIDは、必ず入力してください。'
+            }
+            $('#errMessage').html(errMessage);
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <form id="form_sample" name="form_sample">
+    <header>
+        <hgroup>
+            <h1>HTML5 form & CSS Sample</h1>
+            <h2>このページは、HTML5のFormとCSSサンプルページです。</h2>
+        </hgroup>
+    </header>
+    <div id="errMessage"></div>
+    <p><input type="submit" onclick="return execute();" value="送信" /></p>
+    <h2>formの新機能</h2>
+    <h3>input type="tel"</h3>電話番号：<input type="tel" id="tel" name="tel"/>
+    <p>電話番号を入力するためのコントロールを作成します。safariでは、実装されていないため、確認できませんでした。</p>
+    <h3>input type="email"</h3>メールアドレス：<input type="email" id="email" name="email"/>
+    <p>メールアドレスを入力するためのコントロールを作成します。Safariは、validity.validを実行することで入力チェックが実行されます。<br/>
+    しかし、iphoneで見ると以下のようにキーボードが切り替わります。</p>
+    <h3>input type="url"</h3>URL：<input type="url" id="url" name="url"/>
+    <p>URLを入力するためのコントロールを作成します。Safariは、validity.validを実行することで入力チェックが実行されます。</p>
+    <h3>input type="search"</h3>検索：<input type="search" name="search"/>
+    <p>検索を入力するためのコントロールを作成します。入力ボックスがMacのような角丸になります。</p>
+    <h3>input type="range"</h3>数値の範囲：<input type="range" name="range" max="1000" value="500" onchange="setRangeValue(this.value)"/> 選択した値：<span id="range_value">500</span>
+    <p>数値の範囲をスライダーで指定できるコントロールを作成します。スライダで選択した値は、onchangeイベントをハンドルします。</p>
+    <h3>placeholder</h3>郵便番号：<input type="text" id="postno" name="postno" placeholder="530-21"/>
+    <p>入力してほしい形を説明、例を記述することなくスマートに表現できるようになります。</p>
+    <h3>pattern</h3>携帯電話番号：<input type="tel" name="smartphone" id="smartphone" pattern="¥d{3}-¥d{4}-¥d{4}"/>
+    <p>入力チェックが正規表現で指定できるようになります。本書には、safari対応済みとのことですが、実際には、Operaでしか動作しないようです。</p>
+    <h3>required</h3>ユーザID：<input type="text" id="userid" name="userid" required/>
+    <p>未入力の場合は、エラーとなります。Safariは、validity.validを実行することで入力チェックが実行されます。</p>
+    <h2>CSS3.0の新機能</h2>
+    <h3>要素セレクタ</h3>
+    <article>要素を選択してスタイルシートを適用できます。</article>
+    <div>
+        <p>タグ１</p>
+        <p>タグ２</p>
+        <p>タグ３</p>
+        <p>タグ４</p>
+        <p>タグ５</p>
+    </div>
+    <p>nth-childを使うと交互に別のスタイルシートを適用できます。上記の例は、divタグの中にあるpタグの偶数、奇数の背景色を変えています。</p>
+    <h3>属性セレクタ</h3>
+    <p title="title1">タグ１</p>
+    <p title="title2">タグ２</p>
+    <p title="title3">タグ３</p>
+    <p>属性を選択してスタイルシートを適用できます。上記の例は、pタグのtitle属性が"2"で終了するものの文字色を変えています。</p>
+    <h3>角丸レイアウト</h3>
+    <input type="text" class="radius"/>
+    <p>角を丸くできます。</p>
+    <h3>カラムレイアウト</h3>
+    <div id="box">
+        <div id="left">左</div>
+        <div id="center">真ん中</div>
+        <div id="right">右</div>
+    </div>
+    <p>カラムレイアウトを作成するために以前は、floatやpositionを利用していました。しかし、display:boxとするだけで、カラムレイアウトが作れてしまいます、</p>
+    <h2>transition</h2>
+    <div id="tran">
+        <br/><br/><br/>
+    </div>
+    <p>プロパティの値を動的に変化させます。上記は、マウスをホバーすると色が変化していく例です。<p>
+    <h2>animation</h2>
+    <div id="anime">
+        <br/><br/><br/>
+    </div>
+    <p>アニメーションが作成できます。実行過程を％で指定できます。上記は、右、左に動作しながらスムーズに色が変化していきます。</p>
+    </form>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+</html>

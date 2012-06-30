@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        article {
+            color:blue;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+        p[title$="2"]{
+            color: yellow;
+        }
+        .slider{
+            width: 700px;
+        }
+        </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var video;
+        var slider;
+        function play(){
+            video.play();
+        }
+        function stop(){
+            video.pause();
+        }
+        function stopvideo() {
+            video.currentTime = 0;
+            video.pause();
+        }
+        function init(){
+            video = document.getElementById("video_earth");
+            slider = document.getElementById("slider");
+            slider.min = "0";
+            slider.max = String(Math.round(video.duration));
+            video.addEventListener("play", function(){
+                    $('#videostatus').html("再生開始");
+                    }, false);
+            video.addEventListener("pause", function(){
+                    $('#videostatus').html("再生停止");
+                    }, false);
+            video.addEventListener("playing", function(){
+                    $('#videostatus').html("再生中");
+                    }, false);
+            video.addEventListener("ended", function(){
+                    stopvideo();
+                    $('#videostatus').html("再生終了");
+                    }, false);
+            video.addEventListener("timeupdate", function() {
+                    $('#videotime').html(Math.round(video.currentTime) + "sec / " + Math.round(video.duration) + "sec");
+                    slider.value = video.currentTime;
+                    }, false);
+            slider.addEventListener("change", function() {
+                    video.currentTime = this.valueAsNumber;
+                    }, false);
+
+            //四角形の描画
+            var tetragon = document.getElementById("tetragon")
+            var context = tetragon.getContext("2d");
+            context.fillStyle = 'yellow'; //塗りつぶしの色を黄色にする
+            context.fillRect(65, 65, 60, 60);   //(65, 65)を頂点として、幅60, 高さ60の領域を塗りつぶし
+            context.strokeRect(85, 85, 20, 20); //(85, 85)を頂点として、幅20, 高さ20の領域を塗りつぶし
+
+            //線から図形の描画
+            var line = document.getElementById("line")
+            var context_line = line.getContext("2d");
+            context_line.beginPath();
+            context_line.moveTo(40, 30);
+            context_line.lineTo(160, 30);
+            context_line.lineTo(140, 160);
+            context_line.lineTo(20, 160);
+            context_line.closePath();
+            var gradi = context_line.createLinearGradient(0, 0, 0, 160);
+            gradi.addColorStop(0, 'white');
+            gradi.addColorStop(0.9, 'black');
+            context_line.fillStyle = gradi;
+            context_line.fill();
+            context_line.stroke();
+
+            //円
+            var arc = document.getElementById("arc");
+            var context_arc = arc.getContext("2d");
+            context_arc.beginPath();
+            context_arc.arc(100, 100, 70, 0, 2*Math.PI, true);
+            var gradi_arc = context_arc.createRadialGradient(70,70,20,70,70,70);
+            gradi_arc.addColorStop(0, 'white');
+            gradi_arc.addColorStop(0.9, 'black');
+            context_arc.fillStyle = gradi_arc;
+            context_arc.fill();
+            context_arc.stroke();
+
+            //画像
+            var img = document.getElementById("img");
+            var context_img = img.getContext("2d");
+            context_img.fillStyle="gray";
+            context_img.fillRect(0, 0, 300, 300);
+            var image = new Image();
+            image.src = "ahirugumi.png";
+            image.onload=function(){
+                context_img.drawImage(image, 0, 0, 300, 300);
+            }
+        }
+        function upSpeed() {
+            video.playbackRate += 0.5;
+        }
+        function downSpeed() {
+            video.playbackRate -= 0.5;
+        }
+    </script>
+</head>
+<body onload="init()">
+    <form id="form_sample" name="form_sample">
+    <header>
+        <hgroup>
+            <h1>HTML5 Video & Canvas Sample</h1>
+            <h2>このページは、HTML5のVideoとCanvasのサンプルページです。</h2>
+        </hgroup>
+    </header>
+    <div id="errMessage"></div>
+    <h2>Video</h2>
+    <video id="video_earth" preload="auto" width="700">
+        <source src="earth.mp4">
+    </video>
+    <br>
+    <input type="range" class="slider" id="slider" value="0">
+    <br>
+    <input type="button" onclick="play()" value="play">
+    <input type="button" onclick="stop()" value="stop">
+    <input type="button" onclick="upSpeed()" value="Speedup">
+    <input type="button" onclick="downSpeed()" value="Speeddown">
+    <span id="videostatus"></span>
+    <p id="videotime"></p>
+    <h2>Canvas</h2>
+    <h3>四角形</h3>
+    <canvas id="tetragon" style="border: 2px solid;" width="200" height="200"></canvas>
+    <h3>線から図形を描画とグラデーション</h3>
+    <canvas id="line" style="border: 2px solid;" width="200" height="200"></canvas>
+    <h3>円とグラデーション</h3>
+    <canvas id="arc" style="border: 2px solid;" width="200" height="200"></canvas>
+    <h3>画像</h3>
+    <canvas id="img" width="300" height="300"></canvas>
+
+    </form>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+</html>
