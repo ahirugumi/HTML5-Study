@@ -35,7 +35,6 @@
             };
             target.ondrop=function(e){
                 $('#event').html('onDropが発生しました。');
-                //e.stopPropagation();
                 target.innerHTML='';
                 var drop_target=document.getElementById(e.dataTransfer.getData("img"));
                 if (drop_target!=null){
