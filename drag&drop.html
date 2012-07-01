@@ -44,9 +44,12 @@
                 if (drop_text!=null){
                     target.innerHTML=drop_text;
                 }
-                var file = e.dataTransfer.files[0];
-                if (file!=null){
-                    target.innerHTML="ファイル名：" + file.name + "<br>ファイルタイプ：" + file.type + "<br>ファイルサイズ：" + file.size/1000 +"キロバイト";
+                var file = e.dataTransfer.files;
+                if (file!=null && file.length!=0){
+                    target.innerHTML="";
+                    for (var i=0; i<file.length; i++){
+                        target.innerHTML=target.innerHTML + "===<br>ファイル名：" + file[i].name + "<br>ファイルタイプ：" + file[i].type + "<br>ファイルサイズ：" + file[i].size/1000 +"キロバイト<br>";
+                    }
                     //safariでは、FileReader()が実装されていない
                     // var reader = new FileReader();
                     // reader.onload = function(e) {
@@ -99,8 +102,10 @@
             <h2>このページは、HTML5のdrag & dropのサンプルページです。</h2>
         </hgroup>
     </header>
-    前回の勉強会で描いたCanvasをドラックアンドドロップしてみましょう。<br>
-    発生するイベントが表示されます。
+    以下の機能を実装しています。<br>
+    前回の勉強会で描いたCanvasをドラッグアンドドロップするとあひるの画像が移動します。<br>
+    複数のファイルをドラッグ＆ドロップするとファイル情報が一覧で出力されます。<br>
+    ブラウザ外のテキストを選択して、ドラッグ＆ドロップするとテキストが表示されます。<br>
     <button id="clear">再描画</button>
     <div><canvas draggable="true" id="img" width="300" height="300"></canvas></div>
     <div id="drag_drop"></div>
