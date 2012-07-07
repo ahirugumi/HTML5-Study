@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            navigator.geolocation.getCurrentPosition(okCallback, ngCallback);
+        });
+        function okCallback(pos){
+            $('#lati').html(pos.coords.latitude);
+            $('#longi').html(pos.coords.longitude);
+            //google mapの緯度、経度にセットします
+            var mapCenter = new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
+            var mapOptions = {
+                zoom: 16,
+                center: mapCenter,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                scaleControl: true,
+            };
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            //google map上のマーカーを定義します
+            var marker = new google.maps.Marker({
+                position: mapCenter,
+                map: map,
+                title: 'いまここ'
+            });
+            map.setCenter(mapCenter);
+        }
+        function ngCallback(er){
+            $('#er').html="エラーコード" + er.code + "で、位置情報の取得が失敗しました。";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h1>HTML5 geolocation Sample</h1>
+            <h2>このページは、HTML5のgeolocationのサンプルページです。</h2>
+        </hgroup>
+    </header>
+    <div id="er"></div>
+    緯度<div id="lati"></div><br>
+    経度<div id="longi"></div><br>
+    <div id="map" style="width:640px; height:480px" align="center"></div>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+
