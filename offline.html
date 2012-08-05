@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html manifest="offline.manifest">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+        .map {
+            width:640px;
+            height:480px;
+            text-align:center;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="jquery.alerts.js"></script>
+    <link rel="stylesheet" href="jquery.alerts.css" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if (navigator.onLine){
+                $('#offline').html('online中です');
+            }else{
+                $('#offline').html('offline中です');
+            }
+            window.applicationCache.addEventListener("cached", function() { $('#status').append("<br>キャッシュしました");}, false);
+            window.applicationCache.addEventListener("checking", function() { $('#status').append("<br>マニフェストをチェック中です");}, false);
+            window.applicationCache.addEventListener("noupdate", function() { $('#status').append("<br>更新はありません");}, false);
+            window.applicationCache.addEventListener("downloading", function() { $('#status').append("<br>ダウンロード中です");}, false);
+            window.applicationCache.addEventListener("progress", function() { $('#status').append("<br>キャッシュを更新中です");}, false);
+            window.applicationCache.addEventListener("error", function() { $('#status').append("<br>エラーが発生しましました");}, false);
+            window.applicationCache.addEventListener("updateready", function() {
+                jConfirm('新しいキャッシュがあります。更新しますか？', '確認', function(r){
+                    if (r){
+                        jAlert('キャッシュを更新します。');
+                        window.applicationCache.swapCache();
+                        location.reload();
+                    }
+                });
+            ;}, false);
+
+            $('#cacheupdate').click(function () {
+                window.applicationCache.update();
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h1>HTML5 offline Sample</h1>
+            <h2>このページは、HTML5のofflineのサンプルページです。</h2>
+        </hgroup>
+    </header>
+    <div id="offline"></div><br>
+    <input id="cacheupdate" type="button" value="キャッシュ更新"/><br>
+    <div id="status"></div>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+
