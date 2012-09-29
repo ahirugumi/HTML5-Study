@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var storage = sessionStorage;  //ここをlocalStorageにかえるだけでlocalStorage1として動作する
+        $(document).ready(function(){
+            $('#save').click(function () {
+                var keyVal = $('#key').val();
+                var valueVal = $('#value').val();
+                if(keyVal && valueVal){
+                    storage.setItem(keyVal, valueVal);
+                }
+                keyVal = "";
+                valueVal = "";
+                list();
+            });
+            $('#reset').click(function () {
+               storage.clear();
+               list();
+            });
+        });
+
+        function list(){
+            var list = "";
+            for(var i=0; i < storage.length; i++){
+                var _key = storage.key(i);
+                list += _key + " : " + storage.getItem(_key) + "   <a href=\"#\" onClick=\"remove(" + i + "); return false;\">削除</a><br>";
+            }
+            $('#list').html(list);
+        }
+
+        function remove(n){
+            var _key = storage.key(n);
+            storage.removeItem(_key);
+            list();
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h1>HTML5 WebStorage Sample</h1>
+            <h2>このページは、HTML5のWebStorageのサンプルページです。</h2>
+        </hgroup>
+    </header>
+Key : <input type="text" name="key" id="key" size="10">
+  
+Value : <input type="text" name="value" id="value" size="10">
+<input type="button" value="保存" id="save" >
+<input type="button" value="クリア" id="reset" >
+<div id="list"></div>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+
