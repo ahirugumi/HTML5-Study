@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var customer = [["0001", "顧客１", "住所１"],["0002", "顧客２","住所２"],
+                       ["0003", "顧客３", "住所３"],["0004", "顧客４", "住所４"],
+                       ["0005", "顧客５", "住所５"],["1000", "hoge", "piyo"]];
+        var database = window.openDatabase('test', 1.0, 'test db', 1024*1024);
+        $(document).ready(function(){
+            database.transaction(function(tran){
+                tran.executeSql('CREATE TABLE IF NOT EXISTS customer(id INTEGER PRIMARY KEY, CUSID TEXT NOT NULL, CUSNAME TEXT NOT NULL, CUSADDRESS TEXT NOT NULL)');
+                for(var i=0; i< customer.length; i++){
+                    var item = customer[i];
+                    tran.executeSql("INSERT INTO customer(CUSID, CUSNAME, CUSADDRESS) VALUES (?, ?, ?)",item);
+                }
+            }
+            , function(error){console.log(error.message);}
+            );
+            $('#search').click(function () {
+                var list = "";
+                database.transaction(function(tx){
+                    tx.executeSql("SELECT * FROM CUSTOMER", [], function(tx, rs) {
+                        var html = "";
+                        for (var i = 0, j = rs.rows.length; i < j; i++) {
+                        //for (var i = 0, i < rs.rows.length; i++) {
+                            var row = rs.rows.item(i);
+                            html += " <p>顧客ID : " + row.CUSID + "　　顧客名 : " +  row.CUSNAME + "　　顧客住所 : " + row.CUSADDRESS + "</p>";
+                        }
+                        document.getElementById('list').innerHTML = html;
+                    },function(error){console.log(error.message);});
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h1>HTML5 WebSQLDatabase Sample</h1>
+            <h2>このページは、HTML5のWebSQLDatabaseのサンプルページです。</h2>
+        </hgroup>
+    </header>
+<input type="button" value="検索" id="search" >
+<div id="list"></div>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+
