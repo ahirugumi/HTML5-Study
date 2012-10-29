@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var targetOrigin = "http://localhost";
+        $(document).ready(function() {
+            var onmessage = function(e) {
+                if (e.origin == targetOrigin) {
+                    var data = e.data;
+                    var origin = e.origin;
+                    $('#receive').html(data + "<br>");
+                    e.source.postMessage('クロスドキュメントメッセージを受信しました。', targetOrigin);
+                }
+            };
+            window.addEventListener("message", onmessage, true);
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h2>クロスドキュメントメッセージング 受信側（iframe）</h2>
+        </hgroup>
+    </header>
+    受信メッセージ：<br>
+    <strong id="receive"></strong>
+    <footer></footer>
+</body>
+

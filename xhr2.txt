@@ -1,0 +1,1 @@
+{id: "hoge", comment: "xhr2 sample json"}

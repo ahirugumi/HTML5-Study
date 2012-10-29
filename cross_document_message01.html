@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var targetOrigin = "http://kinmokusei.sakura.ne.jp";
+        $(document).ready(function() {
+            var onmessage = function(e) {
+                if (e.origin == targetOrigin) {
+                    var data = e.data;
+                    var origin = e.origin;
+                    $('#receive').html(data + "<br>");
+                }
+            };
+            $("#send").click(function(){
+                if($('#message').val()) document.getElementById("crossFrame").contentWindow.postMessage($('#message').val(), targetOrigin);
+            });
+            window.addEventListener("message", onmessage, true);
+        });
+</script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h1>HTML5 クロスドキュメントメッセージング</h1>
+            <h2>クロスドキュメントメッセージング 送信側</h2>
+        </hgroup>
+    </header>
+送信メッセージ：<input type="text" id="message" name="message" value=""><input id="send" type="button" value="送信"><br>
+受信メッセージ：<br><strong id="receive"></strong><br><br>
+<iframe id="crossFrame" border="0" style="border:none;" frameborder="0" src="http://kinmokusei.sakura.ne.jp/study/html5/tanaka/cross_document_message02.html" width="1000" height="300"></iframe>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+

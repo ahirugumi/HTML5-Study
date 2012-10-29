@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#getjson").click(function(){
+                //$.getJSON("http://kinmokusei.sakura.ne.jp/study/html5/tanaka/xhr2.json", function(json){
+                $.get(
+                    "http://localhost/~tomohiro/xhr2.txt",
+                    //"http://kinmokusei.sakura.ne.jp/study/html5/tanaka/xhr2.txt", 
+                    null, 
+                    function(data, status){
+                        $("#json").html(data);
+                    }
+                );
+            });
+        });
+</script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h1>HTML5 XML HTTP Request LV2 Sample</h1>
+        </hgroup>
+    </header>
+<input id="getjson" type="button" value="取得"><br>
+<strong id="json"></strong>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+
