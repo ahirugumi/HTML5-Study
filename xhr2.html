@@ -18,10 +18,9 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#getjson").click(function(){
-                //$.getJSON("http://kinmokusei.sakura.ne.jp/study/html5/tanaka/xhr2.json", function(json){
                 $.get(
-                    "http://localhost/~tomohiro/xhr2.txt",
-                    //"http://kinmokusei.sakura.ne.jp/study/html5/tanaka/xhr2.txt", 
+                    //"http://localhost/~tomohiro/xhr2.txt",
+                    "http://kinmokusei.sakura.ne.jp/study/html5/tanaka/xhr2.php", 
                     null, 
                     function(data, status){
                         $("#json").html(data);
