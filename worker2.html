@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Sample</title>
+    <style type="text/css">
+        body {
+            background: #A9A9A9;
+        }
+        div p:nth-child(odd){
+            background-color: #CDCDC1;
+        }
+        div p:nth-child(even){
+            background-color: #E8E8E8;
+        }
+        .map {
+            width:640px;
+            height:480px;
+            text-align:center;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var worker1=new Worker("worker_process1.js");
+        $(document).ready(function(){
+            $('#shared').click(function () {
+                $('#message').html('共有ワーカー開始');
+                var shared_worker=new SharedWorker("worker_process2.js", "SharedWorker");
+                shared_worker.port.onmessage=function(event){
+                    var num=event.data;
+                    $('#shared_output_message').html(num);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h1>HTML5 SharedWorker Sample</h1>
+            <h2>このページは、HTML5のSharedWorkerのサンプルページです。</h2>
+        </hgroup>
+    </header>
+    <input type="button" id="shared" value="shared">
+    <div id="shared_message"></div>
+    <div id="shared_output_message"></div>
+<footer>
+    <address>&copy; <a href="http://kinmokusei.sakura.ne.jp/doc/">kinmokusei</a></address>
+</footer>
+</body>
+
